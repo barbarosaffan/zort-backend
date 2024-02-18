@@ -4,6 +4,9 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+
+	"github.com/barbarosaffan/zort-backend/config"
+	"github.com/barbarosaffan/zort-backend/repository/postgresql"
 )
 
 type Zort struct {
@@ -25,4 +28,18 @@ func getZorts(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/zorts", getZorts)
 	log.Fatal(http.ListenAndServe(":8080", nil))
+
+	cfg, err := config.LoadConfig()
+
+	if err != nil {
+		log.Fatal("Failed to load config: ", err)
+	}
+
+	db, err := postgresql.NewDB(cfg)
+
+	if err != nil {
+		log.Fatal("Failed to connect to DB: ", err)
+	}
+
+	defer db.Close()
 }
