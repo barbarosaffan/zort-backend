@@ -34,3 +34,5 @@ config.yml
 .vscode
 
 /dist/
+
+pg_data
