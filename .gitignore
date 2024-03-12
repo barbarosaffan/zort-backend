@@ -36,3 +36,5 @@ config.yml
 /dist/
 
 pg_data
+
+api.*
